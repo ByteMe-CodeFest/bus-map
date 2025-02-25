@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amasya Dijital Otobüs Sistemi</title>
+    <style>
+        /* Ana CSS Stilleri */
+        body {
+            background-image: url('jpeg/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            font-family: Verdana, sans-serif;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        /* Sidebar Stilleri */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            transition: all 0.5s ease;
+            z-index: 1000;
+            left: 0;
+        }
+        
+        .sidebar.closed {
+            left: -250px;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-tab {
+            position: fixed;
+            top: 50%;
+            left: 250px;
+            transform: translateY(-50%);
+            width: 25px;
+            height: 50px;
+            background-color: #333;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .sidebar.closed + .content .sidebar-tab {
+            left: 0;
+        }
+        
+        .sidebar-tab .triangle {
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+            transition: all 0.5s ease;
+        }
+        
+        .sidebar:not(.closed) + .content .sidebar-tab .triangle {
+            border-right: 0;
+            border-left: 10px solid white;
+        }
+
+        .sidebar-menu {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .sidebar-menu li {
+            border-bottom: 1px solid #444;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-menu li:hover {
+            background-color: #444;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .sidebar-menu a.active {
+            background-color: #4CAF50;
+        }
+
+        /* İçerik Alanı Stilleri */
+        .content {
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            transition: all 0.5s ease;
+            height: 100vh;
+        }
+        
+        .content.full {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* iframe stilleri */
+        .content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+
+        /* Ana sayfa stili */
+        .homepage-content {
+            padding: 20px;
+            background-image: url('JPEG/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100%;
+            position: relative;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .homepage-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .homepage-text {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        /* Mobil görünüm için medya sorgusu */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                left: -250px;
+            }
+            
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .sidebar-tab {
+                left: 0;
+            }
+            
+            .sidebar:not(.closed) + .content .sidebar-tab {
+                left: 250px;
+            }
+            
+            .homepage-text {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>Otobüs Durakları</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" id="homeLink" class="active">Ana Sayfa</a></li>
+                <li><a href="#" id="mapLink">Harita</a></li>
+                <li><a href="#" id="scheduleLink">Otobüs Saatleri</a></li>
+                <li><a href="#" id="paymentLink">Ödeme</a></li>
+                <li><a href="#" id="aboutLink">Hakkımızda</a></li>
+            </ul>
+        </div>
+
+        <!-- İçerik Alanı -->
+        <div class="content" id="content">
+            <div class="sidebar-tab" id="sidebarTab">
+                <div class="triangle"></div>
+            </div>
+            
+            <!-- Ana sayfa içeriği -->
+            <div class="homepage-content" id="homepageContent">
+                <div class="homepage-text">
+                    <h1>AMASYA DİJİTAL OTOBÜS SİSTEMİ</h1>
+                    <p>Amasya'nın doğal güzellikleri ve tarihi dokusu içinde modern ulaşım hizmetleri.</p>
+                    <p>Solda bulunan menüden haritaya ve diğer sayfalara ulaşabilirsiniz.</p>
+                    <p>Harita bölümüne tıklayarak otobüs duraklarını harita üzerinde görebilirsiniz.</p>
+                </div>
+            </div>
+            
+            <!-- İframe'ler -->
+            <iframe id="mapFrame" src="yusuf.html"></iframe>
+            <iframe id="scheduleFrame" src="hatlar/router.html"></iframe>
+            <iframe id="paymentFrame" src="odeme.html"></iframe>
+            <iframe id="aboutFrame" src="hakkimizda.html"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Element referansları
+            const sidebarTab = document.getElementById('sidebarTab');
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            const homeLink = document.getElementById('homeLink');
+            const mapLink = document.getElementById('mapLink');
+            const scheduleLink = document.getElementById('scheduleLink');
+            const paymentLink = document.getElementById('paymentLink');
+            const aboutLink = document.getElementById('aboutLink');
+            
+            const homepageContent = document.getElementById('homepageContent');
+            const mapFrame = document.getElementById('mapFrame');
+            const scheduleFrame = document.getElementById('scheduleFrame');
+            const paymentFrame = document.getElementById('paymentFrame');
+            const aboutFrame = document.getElementById('aboutFrame');
+            
+            // Tüm içerik alanlarını gizleme fonksiyonu
+            function hideAllContent() {
+                homepageContent.style.display = 'none';
+                mapFrame.style.display = 'none';
+                scheduleFrame.style.display = 'none';
+                paymentFrame.style.display = 'none';
+                aboutFrame.style.display = 'none';
+            }
+            
+            // Sidebar toggle işlevi
+            sidebarTab.addEventListener('click', function() {
+                sidebar.classList.toggle('closed');
+                content.classList.toggle('full');
+            });
+            
+            // Mobil görünüm için başlangıç ayarı
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('closed');
+                content.classList.add('full');
+            }
+            
+            // Aktif link sınıfını ayarlama fonksiyonu
+            function setActiveLink(activeLink) {
+                document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                activeLink.classList.add('active');
+            }
+            
+            // Link tıklama olayları
+            homeLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveLink(homeLink);
+                hideAllContent();
+                homepageContent.style.display = 'block';
+            });
+            
+            mapLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveLink(mapLink);
+                hideAllContent();
+                mapFrame.style.display = 'block';
+            });
+            
+            scheduleLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveLink(scheduleLink);
+                hideAllContent();
+                scheduleFrame.style.display = 'block';
+            });
+            
+            paymentLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveLink(paymentLink);
+                hideAllContent();
+                paymentFrame.style.display = 'block';
+            });
+            
+            aboutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveLink(aboutLink);
+                hideAllContent();
+                aboutFrame.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

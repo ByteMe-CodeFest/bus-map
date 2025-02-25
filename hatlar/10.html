@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otobüs Kalkış Saatleri</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            max-width: 800px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        td {
+            color: black;
+            background-color: #e8f5e9; /* Açık yeşil */
+        }
+        tr:nth-child(even) td {
+            background-color: #c8e6c9; /* Biraz daha koyu bir açık yeşil */
+        }
+        .location {
+            font-size: 0.8em;
+            color: #2e7d32; /* Koyu yeşil */
+            display: block;
+        }
+        .title {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            text-shadow: -2px -2px 0 white,
+                         2px -2px 0 white,
+                        -2px 2px 0 white,
+                         2px 2px 0 white,
+                        -2px 0 0 white,
+                         2px 0 0 white,
+                         0 -2px 0 white,
+                         0 2px 0 white;
+        }
+        .redirect-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .redirect-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Otobüs Kalkış Saatleri</h1>
+
+    <button class="redirect-button" onclick="window.location.href='router.html'">Ana menüye dön</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>AND.KALKIŞ</th>
+                <th>SAN.KALKIŞ</th>
+                <th>AND.KALKIŞ</th>
+                <th>SAN.KALKIŞ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>6.30</td>
+                <td>6.55</td>
+                <td>8.00<span class="location">Belmebük</span></td>
+                <td>8.45<span class="location">Belmebük</span></td>
+            </tr>
+            <tr>
+                <td>10.12</td>
+                <td>11.14</td>
+                <td>13.00</td>
+                <td>14.15</td>
+            </tr>
+            <tr>
+                <td>15.30</td>
+                <td>16.24</td>
+                <td>17.34</td>
+                <td>18.10</td>
+            </tr>
+            <tr>
+                <td>6.36<span class="location">Belmebük</span></td>
+                <td>7.05<span class="location">Belmebük</span></td>
+                <td>8.10</td>
+                <td>9.00</td>
+            </tr>
+            <tr>
+                <td>10.24</td>
+                <td>11.25</td>
+                <td>13.12</td>
+                <td>14.25</td>
+            </tr>
+            <tr>
+                <td>15.40</td>
+                <td>16.45</td>
+                <td>17.46</td>
+                <td>18.25</td>
+            </tr>
+            <tr>
+                <td>6.42<span class="location">İlyas köy</span></td>
+                <td>7.10<span class="location">İlyas köy</span></td>
+                <td>8.20</td>
+                <td>9.05</td>
+            </tr>
+            <tr>
+                <td>10.30</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

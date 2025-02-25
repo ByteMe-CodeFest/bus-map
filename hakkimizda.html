@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda - Amasya Kart</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .about-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #4caf50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #4caf50;
+        }
+        
+        .member-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .member-role {
+            color: #4caf50;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .target-audience {
+            padding: 20px;
+            background-color: #f1f8e9;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .target-audience p {
+            font-size: 1.1rem;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+        
+        .contact-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .contact-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-list i {
+            margin-right: 10px;
+            color: #4caf50;
+        }
+        
+        .email {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .email:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+        }
+        
+        @media (max-width: 768px) {
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hakkımızda</h1>
+            <p class="subtitle">Amasya Kart'ı geliştiren ekip ve vizyonumuz hakkında bilgi edinin</p>
+        </header>
+        
+        <div class="about-section">
+            <h2>Biz Kimiz?</h2>
+            <p>Amasya Kart, toplu taşıma sistemlerini kullanıcılar için daha erişilebilir ve kullanıcı dostu hale getirmeyi amaçlayan yenilikçi bir projedir. Ekibimiz, modern teknolojileri kullanarak toplu taşıma deneyimini iyileştirmek için çalışmaktadır.</p>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <div class="member-avatar">C</div>
+                    <div class="member-name">Ceyhun DALDAL</div>
+                    <div class="member-role">Founder</div>
+                    <p>Projenin kurucusu ve yöneticisi olarak, vizyonumuzu şekillendirmekte ve ekibi yönlendirmektedir.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">Y</div>
+                    <div class="member-name">Yasef DOĞAN</div>
+                    <div class="member-role">Developer</div>
+                    <p>Uygulamamızın teknik altyapısını geliştiren ve kullanıcı deneyimini optimize eden yazılım geliştiricimiz.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">Y</div>
+                    <div class="member-name">Yusuf Taha ALICI</div>
+                    <div class="member-role">Editor</div>
+                    <p>İçerik düzenlemesi ve kullanıcı arayüzü tasarımı konusunda değerli katkılar sağlamaktadır.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2>Hedef Kitlemiz</h2>
+            <div class="target-audience">
+                <p><strong>Toplu taşımada zorluk çeken üniversite öğrencileri</strong> için özel olarak tasarlanmış bir çözüm sunuyoruz. Amacımız, öğrencilerin günlük ulaşım ihtiyaçlarını daha kolay, daha ekonomik ve daha verimli bir şekilde karşılamalarına yardımcı olmaktır.</p>
+            </div>
+            <p>Üniversite öğrencilerinin karşılaştığı toplu taşıma zorluklarını analiz ederek, bu sorunlara özgün ve kullanıcı odaklı çözümler geliştiriyoruz. Amasya Kart, öğrencilerin zaman ve bütçelerini daha iyi yönetmelerine yardımcı olarak hayatlarını kolaylaştırmayı hedefliyor.</p>
+        </div>
+        
+        <div class="about-section">
+            <h2>İletişim Bilgilerimiz</h2>
+            <p>Şikayet, öneri veya sorularınız için aşağıdaki e-posta adreslerinden bizimle iletişime geçebilirsiniz:</p>
+            
+            <ul class="contact-list">
+                <li>
+                    <i>📧</i>
+                    <a href="mailto:daldalceyhun@gmail.com" class="email">daldalceyhun@gmail.com</a> - Ceyhun DALDAL
+                </li>
+                <li>
+                    <i>📧</i>
+                    <a href="mailto:yasefdogan1@gmail.com" class="email">yasefdogan1@gmail.com</a> - Yasef DOĞAN
+                </li>
+                <li>
+                    <i>📧</i>
+                    <a href="mailto:yusuftaha0529@gmail.com" class="email">yusuftaha0529@gmail.com</a> - Yusuf Taha ALICI
+                </li>
+            </ul>
+            
+            <div class="contact-info">
+                <p>Geri bildirimleriniz bizim için çok değerli. Hizmetlerimizi geliştirmek ve ihtiyaçlarınıza daha iyi yanıt vermek için düşüncelerinizi bizimle paylaşın.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 Amasya Kart. Tüm hakları saklıdır.</p>
+        </footer>
+    </div>
+</body>
+</html>

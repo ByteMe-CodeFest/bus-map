@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otobüs Hatları Detayları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .route-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .route-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            border-left: 5px solid #3b82f6;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .route-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .route-card:active {
+            transform: translateY(0);
+        }
+        
+        .bus-icon {
+            width: 40px;
+            margin-right: 10px;
+            color: #3b82f6;
+            flex-shrink: 0;
+        }
+        
+        .route-content {
+            flex-grow: 1;
+        }
+        
+        .route-title {
+            color: #e11d48;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .route-details {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="route-container">
+        <!-- 1. Sanayi -->
+        <div class="route-card" onclick="window.location.href='1.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">1 SANAYI</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; HASTANE MEYDAN YAMPAŞ HELVACI İPEKKÖY FEN EDEBİYAT SANAYI
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Tugay -->
+        <div class="route-card" onclick="window.location.href='2.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">2 TUGAY</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; HASTANE MEYDAN HACILAR MEYDANI HELVACI KARASENİR SERÇOBAN ANADOLU LİSESİ DURAĞI
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Kurşunlu -->
+        <div class="route-card" onclick="window.location.href='3.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">3 KURŞUNLU</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; HASTANE MEYDAN İSTASYON KURŞUNLU TOKİ YEŞİLVADİ HACILAR MEYDANI ANADOLU LİSESİ DURAĞI
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Yüksek Okul -->
+        <div class="route-card" onclick="window.location.href='4.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">4 YÜKSEK OKUL</div>
+                <div class="route-details">
+                    YUNUS EMRE, YEŞİL CAMİ, HAMİDİYE, HAFIZ SITKI EFENDI YÜKSEK OKUL
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Göllü Bağları -->
+        <div class="route-card" onclick="window.location.href='5.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">5 GÖLLÜ BAĞLARI</div>
+                <div class="route-details">
+                    YUNUS EMRE, HALİLİYE, MERKEZ CAMİİ, GÖLLÜ BAĞLARI, DEREBAŞI
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Fen Edebiyat -->
+        <div class="route-card" onclick="window.location.href='6.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">6 FEN EDEBİYAT</div>
+                <div class="route-details">
+                    YUNUS EMRE, HALİLİYE, MEYDAN, FEN EDEBİYAT, TEKNOPARK
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Koza -->
+        <div class="route-card" onclick="window.location.href='7.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">7 KOZA</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; DERVIŞALI MEYDAN YAMPAŞ IPEKKOY KÜLLÜK FEN EDEBİYAT ANADOLU LİSESİ DURAĞI
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Ziyaret -->
+        <div class="route-card" onclick="window.location.href='8.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">8 ZİYARET</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ; HASTANE MEYDAN, TOKİ, KURŞUNLU, ZİYARET, KINALI PAZAR
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Gözlek -->
+        <div class="route-card" onclick="window.location.href='9.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">9 GÖZLEK</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; SANAT İSTASYON MEYDAN, YAMPAŞ, HELVACI, İPEKKÖY, FEN EDEBİYAT
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Boğazköy -->
+        <div class="route-card" onclick="window.location.href='10.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">10 BOĞAZKÖY</div>
+                <div class="route-details">
+                    KALKIŞ YERİ ANITPARK (ŞEHIR SAĞLIĞI CAMİİ DURAĞI) ; FEVZIPAŞA, ŞİRİN ÇEŞME, ÇOK ÇEŞMELI CADDE
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Yeşil Yenice -->
+        <div class="route-card" onclick="window.location.href='11.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">11 YEŞİL YENİCE</div>
+                <div class="route-details">
+                    KALKIŞ YERİ ANITPARK (ŞEHIR SAĞLIĞI CAMİİ DURAĞI) ; YENİCE MEYDAN
+                </div>
+            </div>
+        </div>
+
+        <!-- 12. İlyas Köy -->
+        <div class="route-card" onclick="window.location.href='12.html'">
+            <div class="bus-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 15H2v2a2 2 0 0 0 2 2h1"></path>
+                    <path d="M19 15h2v2a2 2 0 0 1-2 2h-1"></path>
+                    <rect x="5" y="15" width="14" height="4" rx="2"></rect>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="16" cy="17" r="1"></circle>
+                </svg>
+            </div>
+            <div class="route-content">
+                <div class="route-title">12 İLYAS KÖY</div>
+                <div class="route-details">
+                    KALKIŞ YERİ EMNİYET KARŞISI ANADOLU LİSESİ YANI DURAĞI ; MEYDAN, MENEKS, İPEKKÖY, FEN EDEBİYAT, İLYASKÖY, ANADOLU LİSESİ DURAĞI
+                </div>
+            </div>
+        </div>
