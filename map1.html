@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Amasya Otobüs Konum Gösterici</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+    <script src="config.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        #konumBilgisi {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 10;
+        }
+
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        #locate-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        #dark-mode-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .directions-button {
+            background-color: white;
+            border: 1px solid #000;
+            padding: 5px 10px;
+            margin-top: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        /* Menü butonu stili */
+        #menu-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 20;
+            background-color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+        }
+        /* Harita tipi kontrolü için yeni stil */
+        #map-style-control {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            z-index: 10;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: none; /* Varsayılan olarak gizli */
+            width: 180px;
+        }
+        .map-style-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .map-style-option:last-child {
+            border-bottom: none;
+        }
+        .map-style-option:hover {
+            background-color: #f0f0f0;
+        }
+        .map-style-option.active {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        /* Karanlık mod için buton renkleri */
+        .dark-mode-active #locate-button,
+        .dark-mode-active #menu-button,
+        .dark-mode-active #dark-mode-button,
+        .dark-mode-active .directions-button {
+            background-color: #333;
+            color: white;
+        }
+        .dark-mode-active #map-style-control {
+            background-color: #333;
+        }
+        .dark-mode-active .map-style-option {
+            color: white;
+            border-bottom: 1px solid #555;
+        }
+        .dark-mode-active .map-style-option:hover {
+            background-color: #444;
+        }
+        .dark-mode-active .map-style-option.active {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map" style="width: 100%; height: 100vh;"></div>
+<div id="konumBilgisi">Konum alınıyor...</div>
+<button id="menu-button">...</button>
+
+<script>
+    // Konum yönetimi için merkezi bir nesne
+    const LocationManager = {
+        currentPosition: null,
+        userMarker: null,
+        map: null,
+        listeners: [],
+        
+        // Konumu al ve güncelle
+        updateLocation: function(callback) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        this.currentPosition = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            accuracy: position.coords.accuracy,
+                            timestamp: position.timestamp
+                        };
+                        
+                        // Tüm dinleyicileri bilgilendir
+                        this.notifyListeners();
+                        
+                        if (callback && typeof callback === 'function') {
+                            callback(this.currentPosition);
+                        }
+                    },
+                    error => {
+                        console.error("Konum alınamadı:", error.message);
+                        document.getElementById("konumBilgisi").innerText = 
+                            "Konum alınamadı! Hata: " + error.message;
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        maximumAge: 10000,
+                        timeout: 5000
+                    }
+                );
+            } else {
+                document.getElementById("konumBilgisi").innerText = 
+                    "Tarayıcınız konum hizmetlerini desteklemiyor.";
+            }
+        },
+        
+        // Sürekli konum takibi başlat
+        startTracking: function() {
+            if (navigator.geolocation) {
+                this.watchId = navigator.geolocation.watchPosition(
+                    position => {
+                        this.currentPosition = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            accuracy: position.coords.accuracy,
+                            timestamp: position.timestamp
+                        };
+                        
+                        // Tüm dinleyicileri bilgilendir
+                        this.notifyListeners();
+                    },
+                    error => {
+                        console.error("Konum takibi yapılamıyor:", error.message);
+                        document.getElementById("konumBilgisi").innerText = 
+                            "Konum takibi yapılamıyor! Hata: " + error.message;
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        maximumAge: 10000,
+                        timeout: 5000
+                    }
+                );
+            }
+        },
+        
+        // Konum değişikliğini dinlemek için fonksiyon ekle
+        addListener: function(callback) {
+            this.listeners.push(callback);
+            
+            // Hali hazırda konum varsa hemen bilgilendir
+            if (this.currentPosition) {
+                callback(this.currentPosition);
+            }
+        },
+        
+        // Tüm dinleyicileri bilgilendir
+        notifyListeners: function() {
+            if (!this.currentPosition) return;
+            
+            this.listeners.forEach(callback => {
+                callback(this.currentPosition);
+            });
+        },
+        
+        // Konum verisini döndür
+        getPosition: function() {
+            return this.currentPosition;
+        },
+        
+        // Takip etmeyi durdur
+        stopTracking: function() {
+            if (this.watchId) {
+                navigator.geolocation.clearWatch(this.watchId);
+                this.watchId = null;
+            }
+        }
+    };
+
+    // Global değişkenler
+    let markerData = [];
+    let busStopData = [
+        {
+            lng: 35.81898005259835,
+            lat: 40.60334291781015,
+            label: "Sultan Beyazıt KYK",
+            schedule: [],
+            originalSchedule: []
+        },
+        {
+            lng: 35.8120564911628,
+            lat: 40.60673605201167,
+            label: "Sağlık Fakültesi Geliş",
+            schedule: [],
+            originalSchedule: []
+        },
+        {
+            lng: 35.813670862671856,
+            lat: 40.64748813553502,
+            label: "Mezarlık",
+            schedule: [],
+            originalSchedule: []
+        },
+        {
+            lng: 35.805376980033,
+            lat: 40.65542855188074,
+            label: "Eğitim",
+            schedule: [],
+            originalSchedule: []
+        }
+    ];
+
+    // Otobüs zaman çizelgesi
+    let schedule2 = [
+        "07:30", "07:35", "07:40", "07:45", "07:50", "08:00", "08:10", "08:20", "08:30", "08:50",
+        "09:00", "09:20", "09:30", "10:00", "10:30", "10:50", "11:00", "11:15", "11:30", "11:45",
+        "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15",
+        "14:30", "14:45", "15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30", "16:45",
+        "17:00", "17:15", "17:30", "17:45", "18:00", "18:15", "18:30", "19:30", "20:00", "21:00",
+        "21:30", "22:00", "22:30"
+    ];
+
+    // Function to subtract minutes from the given schedule
+    function adjustSchedule(schedule, minutesToSubtract) {
+        return schedule.map(time => {
+            let [hour, minute] = time.split(':').map(Number);
+            minute -= minutesToSubtract;
+            if (minute < 0) {
+                minute += 60;
+                hour -= 1;
+            }
+            return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        });
+    }
+
+    // Durak zamanlarını ayarla
+    busStopData[0].schedule = schedule2;
+    busStopData[0].originalSchedule = schedule2;
+    
+    busStopData[1].schedule = adjustSchedule(schedule2, 7);
+    busStopData[1].originalSchedule = busStopData[1].schedule;
+    
+    busStopData[2].schedule = adjustSchedule(schedule2, 19);
+    busStopData[2].originalSchedule = busStopData[2].schedule;
+    
+    busStopData[3].schedule = adjustSchedule(schedule2, 25);
+    busStopData[3].originalSchedule = busStopData[3].schedule;
+
+    function calculateTimeRemaining(schedule) {
+        let now = new Date();
+        let currentTime = now.getHours() * 60 + now.getMinutes();
+        let nextBuses = [];
+        
+        for (let time of schedule) {
+            let [hour, minute] = time.split(':').map(Number);
+            let busTime = hour * 60 + minute;
+            if (busTime > currentTime) {
+                let diff = busTime - currentTime;
+                nextBuses.push(diff);
+                if (nextBuses.length == 2) break; // Only show the next two buses
+            }
+        }
+
+        if (nextBuses.length == 0) {
+            return "Bugün başka otobüs yok.";
+        } else if (nextBuses.length == 1) {
+            return `Sonraki otobüs ${nextBuses[0]} dakika içinde.`;
+        } else {
+            return `Sonraki otobüs ${nextBuses[0]} dakika içinde.\nSıradaki otobüs ${nextBuses[1]} dakika içinde.`;
+        }
+    }
+
+   
+    
+    // Genişletilmiş harita stilleri (istediğiniz stilleri kaldırdım)
+    const mapStyles = {
+        streets: 'mapbox://styles/mapbox/streets-v11',
+        satellite: 'mapbox://styles/mapbox/satellite-v9',
+        satelliteStreets: 'mapbox://styles/mapbox/satellite-streets-v11',
+        dark: 'mapbox://styles/mapbox/dark-v10'
+    };
+    
+    // Harita stillerinin Türkçe isimleri (istediğiniz stilleri kaldırdım)
+    const mapStyleNames = {
+        streets: "Harita Görünümü",
+        satellite: "Uydu Görünümü",
+        satelliteStreets: "Uydu + Sokaklar",
+        dark: "Karanlık Mod"
+    };
+    
+    // Dark mode durumunu izleyen değişken
+    let isDarkMode = false;
+    
+    // Check initial time for dark mode
+    const currentHour = new Date().getHours();
+    const shouldStartInDarkMode = currentHour >= 18 || currentHour < 6;
+    
+    // Harita varsayılan stili
+    let currentStyle = shouldStartInDarkMode ? 'dark' : 'streets';
+    
+    // Harita nesnesini oluştur
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: mapStyles[currentStyle],
+        center: [35.80253179153048, 40.64832696119699],
+        zoom: 17
+    });
+    
+    // Update isDarkMode based on initial style
+    isDarkMode = currentStyle === 'dark';
+    updateButtonStyles(isDarkMode);
+    
+    // Harita referansını LocationManager'a ekle
+    LocationManager.map = map;
+    
+    // Konum bilgisi ekranını güncelleyen dinleyici
+    LocationManager.addListener(position => {
+        const konumBilgisi = document.getElementById("konumBilgisi");
+        konumBilgisi.innerText = `Enlem: ${position.lat.toFixed(6)}, Boylam: ${position.lng.toFixed(6)}`;
+    });
+    
+    // Kullanıcı işaretçisini (marker) güncelleyen dinleyici
+    LocationManager.addListener(position => {
+        if (LocationManager.userMarker) {
+            LocationManager.userMarker.setLngLat([position.lng, position.lat]);
+        } else {
+            LocationManager.userMarker = new mapboxgl.Marker({ color: 'red' })
+                .setLngLat([position.lng, position.lat])
+                .addTo(map);
+        }
+    });
+
+    // Yol tarifi alma fonksiyonu
+    window.getDirections = function(destLat, destLng) {
+        LocationManager.updateLocation(position => {
+            const googleMapsUrl = `https://www.google.com/maps/dir/${position.lat},${position.lng}/${destLat},${destLng}`;
+            window.open(googleMapsUrl, '_blank');
+        });
+    };
+
+    // Function to create a marker with updated schedule and time
+    function createBusStopMarker(data) {
+        var marker = new mapboxgl.Marker({ color: 'blue' })
+            .setLngLat([data.lng, data.lat])
+            .setPopup(new mapboxgl.Popup().setHTML(`
+                <h3>${data.label}</h3>
+                <p>${calculateTimeRemaining(data.schedule)}</p>
+                <button class="directions-button" onclick="getDirections(${data.lat}, ${data.lng})">Yol Tarifi Al</button>
+            `))
+            .addTo(map);
+        
+        return marker;
+    }
+
+    // Aktif işaretçileri saklamak için dizi
+    let activeMarkers = [];
+
+    // Tüm durak işaretçilerini oluştur
+    function createAllBusStopMarkers() {
+        // Önce mevcut işaretçileri temizle
+        activeMarkers.forEach(marker => marker.remove());
+        activeMarkers = [];
+        
+        // Tüm duraklar için işaretçiler oluştur
+        busStopData.forEach(stop => {
+            const marker = createBusStopMarker(stop);
+            activeMarkers.push(marker);
+        });
+    }
+
+    // Popup'ları güncelle
+    function updateAllPopups() {
+        activeMarkers.forEach((marker, index) => {
+            const stopData = busStopData[index];
+            marker.getPopup().setHTML(`
+                <h3>${stopData.label}</h3>
+                <p>${calculateTimeRemaining(stopData.schedule)}</p>
+                <button class="directions-button" onclick="getDirections(${stopData.lat}, ${stopData.lng})">Yol Tarifi Al</button>
+            `);
+        });
+    }
+
+    // Karanlık mod olduğunda butonların rengini değiştir
+    function updateButtonStyles(isDark) {
+        if (isDark) {
+            document.body.classList.add('dark-mode-active');
+        } else {
+            document.body.classList.remove('dark-mode-active');
+        }
+    }
+
+    // Harita stili değiştirme fonksiyonu
+    function changeMapStyle(style) {
+        // Stil değişkeni güncelle
+        currentStyle = style;
+        
+        // Kullanıcı işaretçisinin konumunu kaydet
+        let userPosition = null;
+        if (LocationManager.userMarker) {
+            userPosition = LocationManager.userMarker.getLngLat();
+            LocationManager.userMarker.remove();
+            LocationManager.userMarker = null;
+        }
+        
+        // Harita görünümünü kaydet
+        const currentCenter = map.getCenter();
+        const currentZoom = map.getZoom();
+        
+        // Aktif stil seçeneğini güncelle
+        document.querySelectorAll('.map-style-option').forEach(option => {
+            option.classList.remove('active');
+        });
+        document.getElementById(`style-${style}`).classList.add('active');
+        
+        // Karanlık mod durumunu kontrol et
+        isDarkMode = style === 'dark';
+        updateButtonStyles(isDarkMode);
+        
+        // Harita stilini değiştir
+        map.setStyle(mapStyles[style]);
+        
+        // Harita stili yüklendikten sonra işaretçileri yeniden oluştur
+        map.once('styledata', function() {
+            // Harita görünümünü geri yükle
+            map.setCenter(currentCenter);
+            map.setZoom(currentZoom);
+            
+            // Durak işaretçilerini yeniden oluştur
+            createAllBusStopMarkers();
+            
+            // Kullanıcı işaretçisini yeniden oluştur
+            if (userPosition) {
+                LocationManager.userMarker = new mapboxgl.Marker({ color: 'red' })
+                    .setLngLat(userPosition)
+                    .addTo(map);
+            }
+        });
+    }
+
+    // Menüyü aç/kapat fonksiyonu
+    function toggleMenu() {
+        const mapStyleControl = document.getElementById('map-style-control');
+        if (mapStyleControl.style.display === 'none' || !mapStyleControl.style.display) {
+            mapStyleControl.style.display = 'block';
+        } else {
+            mapStyleControl.style.display = 'none';
+        }
+    }
+
+    // Add this function after other function declarations
+    function checkTimeAndSetDarkMode() {
+        const currentHour = new Date().getHours();
+        if (currentHour >= 18 || currentHour < 6) {
+            // If it's 6 PM or later, or before 6 AM
+            if (currentStyle !== 'dark') {
+                changeMapStyle('dark');
+                const darkModeButton = document.getElementById('dark-mode-button');
+                if (darkModeButton) {
+                    darkModeButton.textContent = '☀️ Açık Mod';
+                }
+            }
+        }
+    }
+
+    // Harita tamamen yüklendikten sonra
+    map.on('load', () => {
+        // Check dark mode first
+        checkTimeAndSetDarkMode();
+        
+        // Menü butonu işlevselliği
+        document.getElementById('menu-button').addEventListener('click', toggleMenu);
+        
+        // Konum butonu
+        const locateButton = document.createElement('button');
+        locateButton.id = 'locate-button';
+        locateButton.textContent = 'Neredeyim';
+        locateButton.onclick = function() {
+            const position = LocationManager.getPosition();
+            if (position) {
+                map.flyTo({ center: [position.lng, position.lat], zoom: 17 });
+            } else {
+                LocationManager.updateLocation(pos => {
+                    map.flyTo({ center: [pos.lng, pos.lat], zoom: 17 });
+                });
+            }
+        };
+        document.body.appendChild(locateButton);
+        
+        // Karanlık mod butonu
+        const darkModeButton = document.createElement('button');
+        darkModeButton.id = 'dark-mode-button';
+        darkModeButton.textContent = '🌙 Karanlık Mod';
+        darkModeButton.onclick = function() {
+            changeMapStyle(currentStyle === 'dark' ? 'streets' : 'dark');
+            this.textContent = currentStyle === 'dark' ? '☀️ Açık Mod' : '🌙 Karanlık Mod';
+        };
+        document.body.appendChild(darkModeButton);
+        
+        // Harita stili kontrol paneli
+        const mapStyleControl = document.createElement('div');
+        mapStyleControl.id = 'map-style-control';
+        document.body.appendChild(mapStyleControl);
+        
+        // Harita stili seçeneklerini oluştur
+        Object.keys(mapStyleNames).forEach(style => {
+            const option = document.createElement('div');
+            option.id = `style-${style}`;
+            option.className = `map-style-option ${style === currentStyle ? 'active' : ''}`;
+            option.textContent = mapStyleNames[style];
+            option.onclick = function() {
+                changeMapStyle(style);
+                toggleMenu(); // Seçimden sonra menüyü kapat
+            };
+            mapStyleControl.appendChild(option);
+        });
+        
+        // Durak işaretçilerini oluştur
+        createAllBusStopMarkers();
+        
+        // Haritaya tıklayınca menüyü kapat
+        map.on('click', function() {
+            document.getElementById('map-style-control').style.display = 'none';
+        });
+    });
+
+    // Add automatic check every minute
+    setInterval(checkTimeAndSetDarkMode, 60000);
+
+    // Periyodik olarak pop-up'ları güncelle
+    setInterval(updateAllPopups, 60000);
+
+    // İlk konum alındığında haritayı kullanıcının konumuna merkezle
+    LocationManager.addListener(position => {
+        if (!LocationManager.initialPositionSet) {
+            map.flyTo({
+                center: [position.lng, position.lat],
+                zoom: 17
+            });
+            LocationManager.initialPositionSet = true;
+        }
+    });
+
+    // Menüyü kapatmak için sayfa dışındaki tıklamalar
+    document.addEventListener('click', function(event) {
+        const menuButton = document.getElementById('menu-button');
+        const mapStyleControl = document.getElementById('map-style-control');
+        
+        // Menü düğmesine veya menünün kendisine tıklanmadıysa menüyü kapat
+        if (event.target !== menuButton && !mapStyleControl.contains(event.target)) {
+            mapStyleControl.style.display = 'none';
+        }
+    });
+
+    // Başlangıçta konum takibini başlat
+    LocationManager.updateLocation();
+    LocationManager.startTracking();
+    
+    // Periyodik olarak konum bilgisini güncelle
+    setInterval(() => LocationManager.updateLocation(), 30000);
+
+    //yasef 
+</script>
+</body>
+</html>
