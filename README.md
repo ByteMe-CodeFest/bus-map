@@ -82,5 +82,5 @@ YOUR API KEY bolmune  Kendi API Key'inizi girmelisiniz. Key almak için <a href=
   
 - 📜 Dipnot:
 
-
+harıtanın yuklenmemesı gibi bir problem le karsılasırsanız apı keyinizi dogru sekilde girememissiniz demektir
 
