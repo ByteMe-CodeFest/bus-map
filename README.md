@@ -67,6 +67,13 @@
   
 - 📜 Dipnot:
 
-  .env klasörü oluşturun içerisine de "MAPBOX_API_KEY=your_api_key_here"
-  Kendi API Key'inizi girebilirsiniz. Key almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
+  .env klasörü oluşturun içerisinde config.js dosyası olusturun.
+
+ config js dosyasının icerisine
+
+       mapboxgl.accessToken = 'YOUR API KEY';
+
+  yazıyoruz.
+
+YOUR API KEY bolmune  Kendi API Key'inizi girebilirsiniz. Key almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
 
