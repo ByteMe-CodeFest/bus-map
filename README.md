@@ -61,13 +61,10 @@
       
 - ▶️ Projeyi Başlatın:
 
-  Projeyi F5'e basıp Local olarak Web üzerinden çalıştırabilirsiniz.
-  <br>
-  <br>
-  
-- 📜 Dipnot:
 
-  .env klasörü oluşturun içerisinde config.js dosyası olusturun.
+projenin içesine .env klasoru olusturun 
+
+  .env klasörü oluşturun içerisinde config.js dosyası olusturun. ( ornek confıg.js dosayası projede mevcut)
 
  config js dosyasının icerisine
 
@@ -75,5 +72,15 @@
 
   yazıyoruz.
 
-YOUR API KEY bolmune  Kendi API Key'inizi girebilirsiniz. Key almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
+YOUR API KEY bolmune  Kendi API Key'inizi girmelisiniz. Key almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
+
+
+
+  Projeyi F5'e basıp Local olarak Web üzerinden çalıştırabilirsiniz.
+  <br>
+  <br>
+  
+- 📜 Dipnot:
+
+
 
