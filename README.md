@@ -59,28 +59,31 @@
 
       git clone https://github.com/ByteMe-CodeFest/bus-map.git
       
+
+<br>
+</p>
+
 - ▶️ Projeyi Başlatın:
+  </p>
+Projeyi çalıştırmak için CTRL+1 veya F5 tuşuna basarak web tarayıcınızda açabilirsiniz.
 
+ <br>
+ <br>
 
-projenin içesine .env klasoru olusturun 
-
-  .env klasörü oluşturun içerisinde config.js dosyası olusturun. ( ornek confıg.js dosayası projede mevcut)
-
- config js dosyasının icerisine
-
-       mapboxgl.accessToken = 'YOUR API KEY';
-
-  yazıyoruz.
-
-YOUR API KEY bolmune  Kendi API Key'inizi girmelisiniz. Key almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
-
-
-
-  Projeyi F5'e basıp Local olarak Web üzerinden çalıştırabilirsiniz.
+- 🌍 Mapbox API Anahtarı Tanımlama:
   <br>
   <br>
-  
-- 📜 Dipnot:
+Projede harita özelliklerini kullanabilmek için Mapbox API anahtarınızı tanımlamanız gerekmektedir. Bunu yapmak için aşağıdaki adımları takip edin: <br>
 
-harıtanın yuklenmemesı gibi bir problem le karsılasırsanız apı keyinizi dogru sekilde girememissiniz demektir
+.env klasörünü oluşturun ve içerisine bir config.js dosyası ekleyin. (Örnek bir config.js dosyası projede mevcuttur.)
+<br>
+config.js dosyanızın içeriği şu şekilde olmalıdır:
+<br>
+<br>
+
+    mapboxgl.accessToken = 'YOUR_API_KEY'; 
+  <br>
+"YOUR_API_KEY" kısmına kendi API anahtarınızı eklemelisiniz. API anahtarı almak için <a href="https://mapbox.com" target="_blank">buraya</a> tıklayın.
+
+
 
