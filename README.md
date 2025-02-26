@@ -75,7 +75,7 @@ Projeyi çalıştırmak için CTRL+1 veya F5 tuşuna basarak web tarayıcınızd
   <br>
 Projede harita özelliklerini kullanabilmek için Mapbox API anahtarınızı tanımlamanız gerekmektedir. Bunu yapmak için aşağıdaki adımları takip edin: <br>
 
-.env klasörünü oluşturun ve içerisine bir config.js dosyası ekleyin. (Örnek bir config.js dosyası projede mevcuttur.)
+ config.js dosyasının içerisine api keyinizi ekleyin. (Örnek bir config.js dosyası projede mevcuttur.)
 <br>
 config.js dosyanızın içeriği şu şekilde olmalıdır:
 <br>
