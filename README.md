@@ -30,7 +30,7 @@
 <br>
 <h3 align="border">🗺️ Harita</h3>
 
-📌 Mapbox tabanlı harita ile otobüs sisteminin görselleştirilmesi.</p>📌 "Neredeyim" butonu ile kullanıcı mevcut konumuna dönebilir.</p>📌 Durak işaretleri ve sıradaki iki otobüsün varış süresi görüntülenir.</p>📌 Seçilen durağa Google Maps yönlendirmesi yapılır.
+📌 Mapbox tabanlı harita ile otobüs sisteminin görselleştirilmesi.</p>📌 Saatin kaç olduğuna göre tema değişir.</p>📌 "Neredeyim" butonu ile kullanıcı mevcut konumuna dönebilir.</p>📌 Durak işaretleri ve sıradaki iki otobüsün varış süresi görüntülenir.</p>📌 Seçilen durağa Google Maps yönlendirmesi yapılır.
 </p>
 <br>
 
