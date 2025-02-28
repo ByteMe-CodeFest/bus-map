@@ -50,7 +50,7 @@
 <br>
 <h2 align="center">🔥 Gelecek Güncellemeler</h2>
 
-📌 Otobüslerin gerçek zamanlı konumlarının haritada gösterilmesi.</p>📌 Kullanıcılara otobüs yaklaşırken bildirim gönderme özelliği.</p>📌 Kullanıcıların durak hataları veya saat bilgilerini bildirebileceği bir geri bildirim sistemi.</p>📌 Daha gelişmiş rota planlama özelliği eklenmesi.
+📌 Otobüslerin gerçek zamanlı konumlarının haritada gösterilmesi.</p>📌 Kullanıcılara otobüs yaklaşırken bildirim gönderme özelliği.</p>📌 Kullanıcıların durak hataları veya saat bilgilerini bildirebileceği bir geri bildirim sistemi.</p>📌 Daha gelişmiş rota planlama özelliği eklenmesi.</p>📌 uygulamayı kullanarak otobuse binen kullanıcılardan alınan verilerle otobüsün anlık konum takibi ve ortalama varış suresinin yeniden hesaplanmasının otomatikleştirilmesi.
 <br>
 <br>
 <h2 align="center">🛠️ Kurulum</h2>
